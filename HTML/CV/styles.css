@@ -71,17 +71,20 @@ section {
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
+
+
 section.show {
     opacity: 1;
     transform: translateY(0);
 }
 
-#about, #skills, #projects, #contact {
+#about, #skills, #Certifications, #projects, #contact {
     color:aliceblue;
     background-color: #6349aa;
     padding: 20px;
     border-radius: 10px;
     height: 20px;
+    
 }
 
 footer {
