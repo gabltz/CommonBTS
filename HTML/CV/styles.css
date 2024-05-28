@@ -98,7 +98,7 @@ footer {
     position: absolute;
     top: 0;
     right: 0;
-    width: 30%;
+    width: 20%;
     height: 100%;
     z-index: 1001; /* Ensure it is above the header */
     text-decoration: none;

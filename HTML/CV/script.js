@@ -16,23 +16,26 @@ document.addEventListener('DOMContentLoaded', function() {
     sections.forEach(section => {
         observer.observe(section);
     });
-    // Smooth scrolling for nav links
 
-    const navLinks = document.querySelectorAll('nav a');
+    // Smooth scrolling for nav links
+    const navLinks = document.querySelectorAll('nav ul li a');
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
+
+            const headerOffset = document.querySelector('header').offsetHeight;
+            const elementPosition = targetSection.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
             window.scrollTo({
-                top: targetSection.offsetTop - document.querySelector('header').offsetHeight,
+                top: offsetPosition,
                 behavior: 'smooth'
             });
         });
     });
 });
-
-
 
 // Smooth scrolling for mouse wheel
 (function() {
