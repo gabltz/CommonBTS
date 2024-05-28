@@ -2,10 +2,11 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
+    background-color: #170e30;
     color: #4b0082;
     scroll-behavior: smooth; /* Smooth scrolling for anchor links */
 }
+
 
 header {
     background-color: black;
@@ -52,7 +53,7 @@ nav ul li a {
     color: #ffffff;
     text-decoration: none;
     font-weight: bold;
-    padding: 10px;
+    padding: 5px;
     transition: background-color 0.3s, opacity 0.3s;
 }
 
@@ -76,7 +77,8 @@ section.show {
 }
 
 #about, #skills, #projects, #contact {
-    background-color: #f4f4f4;
+    color:aliceblue;
+    background-color: #6349aa;
     padding: 20px;
     border-radius: 10px;
     height: 20px;
