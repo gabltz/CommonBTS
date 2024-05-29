@@ -1,0 +1,139 @@
+body {
+    font-family: 'Arial', Arial;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+}
+
+
+header {
+    background-color: black;
+    color: #ffffff;
+    padding: 20px 0; 
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    top: 0;
+    z-index: 1000;
+    opacity: 0.9;
+}
+
+header h1 {
+    margin: 0;
+    padding-left: 30px;
+    padding-top: 30px;
+    display: flex;
+    align-items: center;
+}
+#accueil{
+    color: #000000;
+    text-decoration: none;
+    margin-top: 150px;
+    padding: 5px;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+h2{
+    color: #000000;
+    font-style: bold;
+    font-weight: bold;
+}
+p{
+    color: #000000;
+    font-size: 100%;
+    font-weight: lighter;
+    line-height: 0.2;
+
+}
+#options{
+    margin-top: 60px;
+}
+div b{
+    color: #000000;
+    font-size: 80%;
+    font-style: oblique;
+    font-weight: lighter;
+}
+div li#title{
+    color: #000000;
+    font-size: 170%;
+    font-style: bold;
+    font-weight: bold;
+
+}
+div ul{
+    font-style: oblique;
+    font-weight: lighter;
+}
+
+#accueilimg{
+    position: absolute;
+    top: 143px;
+    right: 2px;
+    width: 40%;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+
+#imgus{
+    position: absolute;
+    top: 143px;
+    left: 2px;
+    width: 40%;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+#whorwep{
+    color: #000000;
+    font-size: 100%;
+    margin-top: 750px;
+    margin-left: 10px;
+}
+#projects{
+    color: #000000;
+    font-size: 100%;
+    margin-top: 150px;
+    margin-left: 10px;
+}
+#music{
+    color: #000000;
+    font-size: 100%;
+    margin-top: 150px;
+    margin-left: 10px;
+}
+
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: right;
+    margin-top: -20px;
+}
+nav ul li {
+    margin: 0 15px;
+}
+nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    opacity: 1;
+}
+
+
+
+
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #ffffff;
+    color: #ffffff;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
