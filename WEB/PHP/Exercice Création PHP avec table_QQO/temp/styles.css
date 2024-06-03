@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+    color: white;
+}
+body {
+    background: url("./images/wallpaperflare.com_wallpaper.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+.content {
+    padding-top: 180px;
+    
+}
+input {
+    color: purple;
+}
+.wrapper {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 40px 50px 40px 50px;
+    background: transparent;
+    border-bottom: 2px solid black;
+    backdrop-filter: blur(40px);
+}
+.wrapper h2 {
+    color: white;
+    font-size: 2em;
+}
+.wrapper .navigation a {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    margin-right: 30px;
+}
+.wrapper .navigation a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: white;
+    left: 0;
+    bottom: 0;
+    transform: scaleX(0);
+    border-radius: 5px;
+    transition: transform .5s;
+}
+.wrapper .navigation a:hover::after {
+    transform: scaleX(1);
+}
+.wrapper .connect button {
+    width: 150px;
+    height: 50px;
+    border-radius: 30px;
+    border: 2px solid black;
+    cursor: pointer;
+    transition: .3s;
+    color: black;
+}
+.wrapper .connect button:hover {
+    background: black;
+    color: white;
+    border: 2px solid white;
+    transform: scale(1.1);
+}
+.log-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 150px;
+    min-height: 100vh;
+}
+.log-box .log {
+    text-align: center;
+    align-items: center;
+    display: table-column;
+    width: 30%;
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.664);
+    backdrop-filter: blur(80px);
+    border: 3px solid black;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    box-shadow: 0 0 50px 0 purple;
+}
+.log-box .log h2 {
+    font-size: 2em;
+    padding: 30px;
+    margin-bottom: 20px;
+    text-shadow: 5px purple;
+}
+.log-box .log .input-group {
+    position: relative;
+}
+.log-box .log .input-group input {
+    width: 80%;
+    height: 50px;
+    background: white;
+    border-radius: 20px;
+    border: 2px solid black;
+    text-align: left;
+    font-size: 1em;
+    margin-bottom: 40px;
+    text-align: center;
+    color: purple;
+}
+.log-box .log .input-group label {
+    position: absolute;
+    transform: translateY(-50%);
+    top: 30%;
+    left: 60px;
+    pointer-events: none;
+    transition: .5s;
+    background: white;
+    border-radius: 50px;
+    width: 20%; 
+    color: black;
+}
+.log-box .log .input-group input:focus~label,
+.log-box .log .input-group input:user-valid~label {
+    top: -2px;
+}
+.log-box .log .submit {
+    padding: 30px;
+}
+.log-box .log .submit button {
+    width: 200px;
+    height: 50px;
+    background: purple;
+    color: white; 
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 0 20px 0 purple;
+    cursor: pointer;
+}
