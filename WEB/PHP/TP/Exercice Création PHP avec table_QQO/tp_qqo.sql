@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : ven. 31 mai 2024 à 07:29
+-- Généré le : lun. 03 juin 2024 à 13:20
 -- Version du serveur : 10.11.6-MariaDB-0+deb12u1
 -- Version de PHP : 8.2.18
 
@@ -20,13 +20,18 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `tp_qqo`
 --
+CREATE DATABASE IF NOT EXISTS `tp_qqo` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `tp_qqo`;
 
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `acteurs`
 --
+-- Création : ven. 31 mai 2024 à 07:28
+--
 
+DROP TABLE IF EXISTS `acteurs`;
 CREATE TABLE `acteurs` (
   `id_act` int(11) NOT NULL,
   `code_lieu_depart` int(11) DEFAULT -10,
@@ -53,6 +58,10 @@ CREATE TABLE `acteurs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- RELATIONS POUR LA TABLE `acteurs`:
+--
+
+--
 -- Déchargement des données de la table `acteurs`
 --
 
@@ -76,12 +85,19 @@ INSERT INTO `acteurs` (`id_act`, `code_lieu_depart`, `nom`, `prenom`, `numero_li
 --
 -- Structure de la table `acteur_equipe`
 --
+-- Création : ven. 31 mai 2024 à 07:28
+--
 
+DROP TABLE IF EXISTS `acteur_equipe`;
 CREATE TABLE `acteur_equipe` (
   `id_acteur_equipe` int(11) NOT NULL,
   `id_act` int(11) NOT NULL,
   `id_equ` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_general_ci;
+
+--
+-- RELATIONS POUR LA TABLE `acteur_equipe`:
+--
 
 --
 -- Déchargement des données de la table `acteur_equipe`
@@ -125,12 +141,20 @@ INSERT INTO `acteur_equipe` (`id_acteur_equipe`, `id_act`, `id_equ`) VALUES
 --
 -- Structure de la table `acteur_role_possible`
 --
+-- Création : ven. 31 mai 2024 à 07:28
+-- Dernière modification : lun. 03 juin 2024 à 12:50
+--
 
+DROP TABLE IF EXISTS `acteur_role_possible`;
 CREATE TABLE `acteur_role_possible` (
   `id_acteur_role_possible` int(11) NOT NULL,
   `id_act` int(11) NOT NULL,
   `id_rol` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELATIONS POUR LA TABLE `acteur_role_possible`:
+--
 
 --
 -- Déchargement des données de la table `acteur_role_possible`
@@ -181,19 +205,22 @@ INSERT INTO `acteur_role_possible` (`id_acteur_role_possible`, `id_act`, `id_rol
 (46, 103, 2),
 (47, 81, 2),
 (48, 107, 1),
-(49, 117, 1),
-(50, 117, 2),
-(51, 117, 3),
 (52, 123, 123),
 (54, 117, 12),
-(57, 117, 35);
+(57, 117, 35),
+(70, 1311, 4),
+(71, 117, 1),
+(72, 1301, 2);
 
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `actions`
 --
+-- Création : ven. 31 mai 2024 à 07:28
+--
 
+DROP TABLE IF EXISTS `actions`;
 CREATE TABLE `actions` (
   `id_action` int(11) NOT NULL,
   `id_clu` int(11) NOT NULL,
@@ -204,6 +231,10 @@ CREATE TABLE `actions` (
   `id_ld` int(11) NOT NULL,
   `id_rol` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELATIONS POUR LA TABLE `actions`:
+--
 
 --
 -- Déchargement des données de la table `actions`
@@ -233,7 +264,10 @@ INSERT INTO `actions` (`id_action`, `id_clu`, `id_equ`, `id_act`, `id_eve`, `id_
 --
 -- Structure de la table `clubs`
 --
+-- Création : ven. 31 mai 2024 à 07:28
+--
 
+DROP TABLE IF EXISTS `clubs`;
 CREATE TABLE `clubs` (
   `id_clu` int(11) NOT NULL,
   `nom` varchar(80) DEFAULT NULL,
@@ -245,6 +279,10 @@ CREATE TABLE `clubs` (
   `adresse_photo1` varchar(60) DEFAULT NULL,
   `adresse_photo2` varchar(60) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELATIONS POUR LA TABLE `clubs`:
+--
 
 --
 -- Déchargement des données de la table `clubs`
@@ -259,7 +297,10 @@ INSERT INTO `clubs` (`id_clu`, `nom`, `numero_de_club`, `adresse_logo`, `couleur
 --
 -- Structure de la table `equipes`
 --
+-- Création : ven. 31 mai 2024 à 07:28
+--
 
+DROP TABLE IF EXISTS `equipes`;
 CREATE TABLE `equipes` (
   `id_equ` int(11) NOT NULL,
   `nom_HBCSM` varchar(25) DEFAULT NULL,
@@ -267,6 +308,10 @@ CREATE TABLE `equipes` (
   `sexe` enum('homme','femme','mixte') DEFAULT NULL,
   `age` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELATIONS POUR LA TABLE `equipes`:
+--
 
 --
 -- Déchargement des données de la table `equipes`
@@ -283,13 +328,20 @@ INSERT INTO `equipes` (`id_equ`, `nom_HBCSM`, `nom_FFHB`, `sexe`, `age`) VALUES
 --
 -- Structure de la table `lieux_depart`
 --
+-- Création : ven. 31 mai 2024 à 07:28
+--
 
+DROP TABLE IF EXISTS `lieux_depart`;
 CREATE TABLE `lieux_depart` (
   `id_ld` int(11) NOT NULL,
   `nom` varchar(25) DEFAULT NULL,
   `adresse` varchar(255) DEFAULT NULL,
   `plan` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELATIONS POUR LA TABLE `lieux_depart`:
+--
 
 --
 -- Déchargement des données de la table `lieux_depart`
@@ -307,15 +359,81 @@ INSERT INTO `lieux_depart` (`id_ld`, `nom`, `adresse`, `plan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `vehicules`
+-- Structure de la table `login`
+--
+-- Création : lun. 03 juin 2024 à 07:40
 --
 
+DROP TABLE IF EXISTS `login`;
+CREATE TABLE `login` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(64) NOT NULL,
+  `name` varchar(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELATIONS POUR LA TABLE `login`:
+--
+
+--
+-- Déchargement des données de la table `login`
+--
+
+INSERT INTO `login` (`id`, `username`, `email`, `password`, `name`) VALUES
+(1, 'gab', 'gab@propel.sh', 'gab', 'Gabin');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `role`
+--
+-- Création : lun. 03 juin 2024 à 12:01
+-- Dernière modification : lun. 03 juin 2024 à 12:03
+--
+
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `id_role` int(11) NOT NULL,
+  `nomRole` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELATIONS POUR LA TABLE `role`:
+--
+
+--
+-- Déchargement des données de la table `role`
+--
+
+INSERT INTO `role` (`id_role`, `nomRole`) VALUES
+(1, 'Joueur'),
+(2, 'Président'),
+(3, 'Parent'),
+(4, 'Chauffeur'),
+(5, 'Entraineur'),
+(6, 'Secrétaire');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `vehicules`
+--
+-- Création : ven. 31 mai 2024 à 07:29
+--
+
+DROP TABLE IF EXISTS `vehicules`;
 CREATE TABLE `vehicules` (
   `id_veh` int(11) NOT NULL,
   `nbr_places` int(11) DEFAULT NULL,
   `nom` varchar(255) DEFAULT NULL,
   `km_cumul` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELATIONS POUR LA TABLE `vehicules`:
+--
 
 --
 -- Déchargement des données de la table `vehicules`
@@ -383,6 +501,18 @@ ALTER TABLE `lieux_depart`
   ADD PRIMARY KEY (`id_ld`);
 
 --
+-- Index pour la table `login`
+--
+ALTER TABLE `login`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`id_role`);
+
+--
 -- Index pour la table `vehicules`
 --
 ALTER TABLE `vehicules`
@@ -408,7 +538,7 @@ ALTER TABLE `acteur_equipe`
 -- AUTO_INCREMENT pour la table `acteur_role_possible`
 --
 ALTER TABLE `acteur_role_possible`
-  MODIFY `id_acteur_role_possible` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id_acteur_role_possible` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT pour la table `actions`
@@ -435,10 +565,86 @@ ALTER TABLE `lieux_depart`
   MODIFY `id_ld` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
+-- AUTO_INCREMENT pour la table `login`
+--
+ALTER TABLE `login`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT pour la table `role`
+--
+ALTER TABLE `role`
+  MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT pour la table `vehicules`
 --
 ALTER TABLE `vehicules`
   MODIFY `id_veh` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+
+--
+-- Métadonnées
+--
+USE `phpmyadmin`;
+
+--
+-- Métadonnées pour la table acteurs
+--
+
+--
+-- Métadonnées pour la table acteur_equipe
+--
+
+--
+-- Métadonnées pour la table acteur_role_possible
+--
+
+--
+-- Déchargement des données de la table `pma__table_uiprefs`
+--
+
+INSERT INTO `pma__table_uiprefs` (`username`, `db_name`, `table_name`, `prefs`, `last_update`) VALUES
+('root', 'tp_qqo', 'acteur_role_possible', '{\"sorted_col\":\"`acteur_role_possible`.`id_rol` DESC\"}', '2024-06-03 12:07:18');
+
+--
+-- Métadonnées pour la table actions
+--
+
+--
+-- Métadonnées pour la table clubs
+--
+
+--
+-- Métadonnées pour la table equipes
+--
+
+--
+-- Métadonnées pour la table lieux_depart
+--
+
+--
+-- Métadonnées pour la table login
+--
+
+--
+-- Métadonnées pour la table role
+--
+
+--
+-- Déchargement des données de la table `pma__table_uiprefs`
+--
+
+INSERT INTO `pma__table_uiprefs` (`username`, `db_name`, `table_name`, `prefs`, `last_update`) VALUES
+('root', 'tp_qqo', 'role', '{\"CREATE_TIME\":\"2024-06-03 14:01:19\",\"col_order\":[0,1],\"col_visib\":[1,1]}', '2024-06-03 12:06:25');
+
+--
+-- Métadonnées pour la table vehicules
+--
+
+--
+-- Métadonnées pour la base de données tp_qqo
+--
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); // Démarrer la session
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: ./index.php'); // Rediriger vers la page de connexion si non connecté
@@ -21,6 +21,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             <h2>BTS CIEL</h2>
             <nav class="navigation">
                 <a href="">Accueil</a>
+                <a href="./acteurs_role_possibles.php">Gestion Acteurs/Rôles</a>
             </nav>
             <div class="connect">
             <form action="./logout.php" method="POST">
@@ -40,15 +41,15 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             ?>
             
             <?php
-            $conn = new mysqli('localhost', 'root', 'CiKoccYG8yS0ImMJngRB', 'tp_qqo');
+            $conn = new mysqli('localhost', 'root', 'CiKoccYG8yS0ImMJngRB', 'tp_qqo'); // Connexion à la base de données
 
             if ($conn->connect_error) {
                 die("Échec de la connexion: " . $conn->connect_error);
             }
             $message = "";
 
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                if (isset($_POST['add'])) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Vérifier si le formulaire est soumis
+                if (isset($_POST['add'])) { // Ajouter un utilisateur
                     $username = mysqli_real_escape_string($conn, $_POST['username']);
                     $email = mysqli_real_escape_string($conn, $_POST['email']);
                     $password = mysqli_real_escape_string($conn, $_POST['password']);
@@ -66,7 +67,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                     }
                 }
 
-                if (isset($_POST['delete'])) {
+                if (isset($_POST['delete'])) { // Supprimer un utilisateur
                     $id = intval($_POST['id']);
                     $stmt = $conn->prepare("DELETE FROM login WHERE id=?");
                     $stmt->bind_param("i", $id);
@@ -78,29 +79,29 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                     $stmt->close();
                 }
 
-                if (isset($_POST['update'])) {
+                if (isset($_POST['update'])) { // Mettre à jour un utilisateur
                     $id = intval($_POST['id']);
-                    $username = mysqli_real_escape_string($conn, $_POST['username']);
+                    $username = mysqli_real_escape_string($conn, $_POST['username']); // Échapper les caractères spéciaux
                     $email = mysqli_real_escape_string($conn, $_POST['email']);
                     $password = mysqli_real_escape_string($conn, $_POST['password']);
-                    if (!empty($username) && !empty($email)&& !empty($password)) {
-                        $stmt = $conn->prepare("UPDATE login SET username=?, email=?, password=? WHERE id=?");
+                    if (!empty($username) && !empty($email)&& !empty($password)) { // Vérifier si les champs ne sont pas vides
+                        $stmt = $conn->prepare("UPDATE login SET username=?, email=?, password=? WHERE id=?"); // Préparer la requête
                         $stmt->bind_param("sssi", $username, $email, $password, $id);
                         if ($stmt->execute()) {
                             $message = "Utilisateur mis à jour avec succès.";
                         } else {
                             $message = "Erreur lors de la mise à jour de l'utilisateur.";
                         }
-                        $stmt->close();
+                        $stmt->close(); // Fermer la requête
                     } else {
                         $message = "Tous les champs sont obligatoires.";
                     }
                 }
             }
 
-            $result = $conn->query("SELECT * FROM login");
-
-            echo '<table>
+            $result = $conn->query("SELECT * FROM login"); // Récupérer tous les utilisateurs
+            // Afficher les utilisateurs dans un tableau
+            echo '<table> 
                     <tr>
                         <th>ID</th>
                         <th>Username</th>
@@ -108,7 +109,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                         <th>Password</th>
                         <th>Action</th>
                     </tr>';
-
+            // Afficher les utilisateurs dans un tableau et modification des users dans le tableau
             while ($row = $result->fetch_assoc()) {
                 echo '<tr>
                         <td>' . $row['id'] . '</td>
@@ -116,10 +117,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                         <td>' . $row['email'] . '</td>
                         <td>' . $row['password'] . '</td>
                         <td>
-                            <form action="" method="POST" style="display:inline;">
-                                <input type="hidden" name="id" value="' . $row['id'] . '">
-                                <button type="submit" name="delete">Supprimer</button>
-                            </form>
+                            
                             <form action="" method="POST" style="display:inline;">
                                 <input type="hidden" name="id" value="' . $row['id'] . '">
                                 <input type="text" name="username" value="' . $row['username'] . '" required placeholder="Username">
@@ -127,16 +125,20 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                                 <input type="password" name="password" value="' . $row['password'] . '" required placeholder="Password">
                                 <button type="submit" name="update">Modifier</button>
                             </form>
+                            <form action="" method="POST" style="display:inline;">
+                                <input type="hidden" name="id" value="' . $row['id'] . '">
+                                <button type="submit" name="delete">Supprimer</button>
+                            </form>
                         </td>
                     </tr>';
             }
 
             echo '</table>';
-            $conn->close();
+            $conn->close(); // Fermer la connexion à la base de données
             ?>
 
             <h2>Ajouter un utilisateur</h2>
-            <form action="" method="POST">
+            <form action="" method="POST"> 
                 <div class="input-group">
                     <input type="text" name="username" required placeholder="Username"><label>Username</label>
                 </div>
