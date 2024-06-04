@@ -27,6 +27,7 @@ option {
 select {
     color: purple;
 }
+
 .wrapper {
     position: fixed;
     display: flex;

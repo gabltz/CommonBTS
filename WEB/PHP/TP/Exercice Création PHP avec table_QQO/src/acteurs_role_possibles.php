@@ -50,47 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     }
-
-    if (isset($_POST['delete_role'])) { // Supprimer le rôle de l'acteur
-        $id = intval($_POST['id']);
-        $stmt = $conn->prepare("DELETE FROM acteur_role_possible WHERE id_acteur_role_possible = ?");
-        $stmt->bind_param("i", $id);
-        if ($stmt->execute()) {
-            $message = "Rôle supprimé avec succès de l'acteur.";
-        } else {
-            $message = "Erreur lors de la suppression du rôle de l'acteur.";
-        }
-        $stmt->close();
-        header('Location: ' . $_SERVER['PHP_SELF']);
-        exit();
-    }
-
-    if (isset($_POST['save_roles'])) {
-        $acteur = intval($_POST['acteur_role']);
-        $roles = isset($_POST['roles']) ? $_POST['roles'] : [];
-        
-        $stmt = $conn->prepare("DELETE FROM acteur_role_possible WHERE id_act = ?");
-        $stmt->bind_param("i", $acteur);
-        $stmt->execute();
-        $stmt->close();
-        
-        foreach ($roles as $role) {
-            $stmt = $conn->prepare("INSERT INTO acteur_role_possible (id_act, id_rol) VALUES (?, ?)");
-            $stmt->bind_param("ii", $acteur, $role);
-            $stmt->execute();
-            $stmt->close();
-        }
-
-        $message = "Les rôles pour l'acteur ont été mis à jour.";
-        header('Location: ' . $_SERVER['PHP_SELF']);
-        exit();
-    }
 }
 
 $acteurs_result = $conn->query("SELECT * FROM acteurs");
 $roles_result = $conn->query("SELECT * FROM role");
 $equipes_result = $conn->query("SELECT * FROM equipes");
-$acteurs_roles_result = $conn->query("SELECT arp.id_acteur_role_possible, CONCAT(a.nom, ' ', a.prenom) AS acteur_nom, r.nomRole  
+$acteurs_roles_result = $conn->query("SELECT arp.id_acteur_role_possible, CONCAT(a.nom, ' ', a.prenom) AS acteur_nom, r.nomRole, arp.id_act  
                                       FROM acteur_role_possible arp 
                                       JOIN acteurs a ON arp.id_act = a.id_act 
                                       JOIN role r ON arp.id_rol = r.id_role"); // Récupérer les acteurs et les rôles associés
@@ -162,6 +127,30 @@ $acteurs_roles_result = $conn->query("SELECT arp.id_acteur_role_possible, CONCAT
         function cancelChanges() {
             updateRoles(document.getElementById("acteur_role").value);
         }
+
+        function editActorRoles(acteurId) {
+            document.getElementById("acteur_role").value = acteurId;
+            updateRoles(acteurId);
+        }
+
+        function deleteRole(roleId) {
+            if (!confirm("Voulez-vous vraiment supprimer ce rôle ?")) return;
+
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+                if (this.status === 200) {
+                    window.location.reload();
+                } else {
+                    alert("Une erreur s'est produite lors de la suppression du rôle.");
+                }
+            }
+            xhttp.onerror = function() {
+                alert("Une erreur s'est produite lors de la suppression du rôle.");
+            }
+            xhttp.open("POST", "delete_role.php", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("id=" + roleId);
+        }
     </script>
 </head>
 <body>
@@ -222,12 +211,9 @@ $acteurs_roles_result = $conn->query("SELECT arp.id_acteur_role_possible, CONCAT
                             <td><?php echo $row['id_acteur_role_possible']; ?></td>
                             <td><?php echo $row['acteur_nom']; ?></td>
                             <td><?php echo $row['nomRole']; ?></td>
-                            <td><a href="#">Editer</a></td>
+                            <td><a href="#" onclick="editActorRoles(<?php echo $row['id_act']; ?>)"><img src="images/edit_icon.png" alt="Edit" style="width: 20px; height: 20px;"></a></td>
                             <td>
-                                <form method="post" action="">
-                                    <input type="hidden" name="id" value="<?php echo $row['id_acteur_role_possible']; ?>">
-                                    <button type="submit" name="delete_role">Supprimer</button>
-                                </form>
+                                <a href="#" onclick="deleteRole(<?php echo $row['id_acteur_role_possible']; ?>)"><img src="images/delete_icon.png" alt="Delete" style="width: 20px; height: 20px;"></a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
