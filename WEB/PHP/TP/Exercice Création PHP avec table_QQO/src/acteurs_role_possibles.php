@@ -193,7 +193,7 @@ $acteurs_roles_result = $conn->query("SELECT arp.id_acteur_role_possible, CONCAT
                     <?php endwhile; ?>
                 </select>
 
-                <button type="submit" name="add_role">Ajouter un ACTEUR-ROLE</button>
+                <button type="submit" class="styled-button" name="add_role">Ajouter un ACTEUR-ROLE</button>
             </form>
 
             <h2>ACTEUR-Role Possible</h2>
@@ -242,8 +242,8 @@ $acteurs_roles_result = $conn->query("SELECT arp.id_acteur_role_possible, CONCAT
                 <div id="rolesContainer">
                     <!-- Les rôles de l'acteur sélectionné seront chargés ici -->
                 </div>
-                <button type="button" onclick="saveChanges()">Enregistrer</button>
-                <button type="button" onclick="cancelChanges()">Annuler</button>
+                <button type="button" class="styled-button" onclick="saveChanges()">Enregistrer</button>
+                <button type="button" class="styled-button" onclick="cancelChanges()">Annuler</button>
             </form>
         </div>
     </div>

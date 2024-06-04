@@ -166,3 +166,21 @@ table th {
 table tr:nth-child(even) {
     background-color: rgba(255, 255, 255, 0.1);
 }
+
+.styled-button {
+    width: 200px;
+    height: 50px;
+    background: purple;
+    color: white; 
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 0 20px 0 purple;
+    cursor: pointer;
+    margin: 10px 0;
+    transition: all 0.3s ease;
+}
+.styled-button:hover {
+    background: white;
+    color: purple;
+    box-shadow: 0 0 20px 0 white;
+}
