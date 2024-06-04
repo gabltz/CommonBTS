@@ -65,27 +65,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    if (isset($_POST['save_roles'])) { // Enregistrer les rôles pour l'acteur
+    if (isset($_POST['save_roles'])) {
         $acteur = intval($_POST['acteur_role']);
-        $roles = $_POST['roles'];
+        $roles = isset($_POST['roles']) ? $_POST['roles'] : [];
+        
         $stmt = $conn->prepare("DELETE FROM acteur_role_possible WHERE id_act = ?");
         $stmt->bind_param("i", $acteur);
         $stmt->execute();
         $stmt->close();
-
-        foreach ($roles as $role) { // Ajouter les nouveaux rôles
+        
+        foreach ($roles as $role) {
             $stmt = $conn->prepare("INSERT INTO acteur_role_possible (id_act, id_rol) VALUES (?, ?)");
             $stmt->bind_param("ii", $acteur, $role);
             $stmt->execute();
             $stmt->close();
         }
+
         $message = "Les rôles pour l'acteur ont été mis à jour.";
         header('Location: ' . $_SERVER['PHP_SELF']);
         exit();
     }
 }
 
-$acteurs_result = $conn->query("SELECT * FROM acteurs"); // Récupérer tous les acteurs
+$acteurs_result = $conn->query("SELECT * FROM acteurs");
 $roles_result = $conn->query("SELECT * FROM role");
 $equipes_result = $conn->query("SELECT * FROM equipes");
 $acteurs_roles_result = $conn->query("SELECT arp.id_acteur_role_possible, CONCAT(a.nom, ' ', a.prenom) AS acteur_nom, r.nomRole  
@@ -103,13 +105,62 @@ $acteurs_roles_result = $conn->query("SELECT arp.id_acteur_role_possible, CONCAT
     <link rel="stylesheet" href="./styles.css">
     <title>Acteurs/Rôles Possible</title>
     <script>
+        let originalRoles = {};
+
         function updateRoles(acteurId) {
             const xhttp = new XMLHttpRequest();
             xhttp.onload = function() {
                 document.getElementById("rolesContainer").innerHTML = this.responseText;
+                saveOriginalRoles();
             }
             xhttp.open("GET", "fetch_roles.php?acteur_id=" + acteurId, true);
             xhttp.send();
+        }
+
+        function toggleRole(acteurId, roleId, checked) {
+            if (!(acteurId in originalRoles)) {
+                originalRoles[acteurId] = {};
+            }
+            originalRoles[acteurId][roleId] = checked;
+        }
+
+        function saveOriginalRoles() {
+            const checkboxes = document.querySelectorAll("#rolesContainer input[type='checkbox']");
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    toggleRole(this.dataset.acteur, this.value, this.checked);
+                });
+            });
+        }
+
+        function saveChanges() {
+            const acteurId = document.getElementById("acteur_role").value;
+            if (!(acteurId in originalRoles)) return;
+
+            for (let roleId in originalRoles[acteurId]) {
+                const checked = originalRoles[acteurId][roleId];
+                const xhttp = new XMLHttpRequest();
+                xhttp.onload = function() {
+                    if (this.status !== 200) {
+                        console.error('Response:', this.responseText);
+                        alert('Une erreur s\'est produite lors de la mise à jour du rôle.');
+                    }
+                }
+                xhttp.onerror = function() {
+                    console.error('Request failed');
+                    alert('Une erreur s\'est produite lors de la mise à jour du rôle.');
+                }
+                xhttp.open("POST", "update_role.php", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("acteur=" + acteurId + "&role=" + roleId + "&checked=" + checked);
+            }
+
+            // Rafraîchir la page après avoir enregistré les modifications
+            window.location.reload();
+        }
+
+        function cancelChanges() {
+            updateRoles(document.getElementById("acteur_role").value);
         }
     </script>
 </head>
@@ -205,8 +256,8 @@ $acteurs_roles_result = $conn->query("SELECT arp.id_acteur_role_possible, CONCAT
                 <div id="rolesContainer">
                     <!-- Les rôles de l'acteur sélectionné seront chargés ici -->
                 </div>
-
-                <button type="submit" name="save_roles">Enregistrer</button>
+                <button type="button" onclick="saveChanges()">Enregistrer</button>
+                <button type="button" onclick="cancelChanges()">Annuler</button>
             </form>
         </div>
     </div>

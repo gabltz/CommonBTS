@@ -19,7 +19,7 @@ while ($role = $roles_result->fetch_assoc()) {
     $checked = in_array($role['id_role'], $assigned_roles) ? 'checked' : '';
     echo '<tr>
             <td>' . $role['nomRole'] . '</td>
-            <td><input type="radio" name="roles[]" value="' . $role['id_role'] . '" ' . $checked . '></td>
+            <td><input type="checkbox" name="roles[]" value="' . $role['id_role'] . '" data-acteur="' . $acteur_id . '" ' . $checked . '></td>
           </tr>';
 }
 echo '</table>';
