@@ -1,0 +1,50 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+p, pre {
+    font-size: 1.2em;
+    color: #666;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* Styles spécifiques pour la page des données brutes */
+pre {
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    overflow: auto;
+    white-space: pre-wrap; /* Permet de renvoyer à la ligne automatiquement */
+    word-wrap: break-word; /* Permet de renvoyer à la ligne automatiquement */
+}
